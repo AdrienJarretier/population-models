@@ -16,6 +16,9 @@ from functools import reduce
 # "1901-2019 : Insee, T34 – Nés vivants et enfants sans vie selon la situation matrimoniale des parents - Séries depuis 1901 pour la France métropolitaine - https://insee.fr/fr/statistiques/4190308?sommaire=4190525",
 # "1994-2019 : Insee, T34 – Nés vivants et enfants sans vie selon la situation matrimoniale des parents - Séries depuis 1994 pour la France entière -https://insee.fr/fr/statistiques/4190308?sommaire=4190525",
 
+
+# répartitiopn population en 1901 : "Source : Insee, état civil et recensement de population "
+
 sum = 0
 yearsCount = 0
 with open('Donnees_annexes_FR_12122020_Annexe_4_Fecondite.csv', newline='', encoding='utf-8') as csvfile:
@@ -26,7 +29,7 @@ with open('Donnees_annexes_FR_12122020_Annexe_4_Fecondite.csv', newline='', enco
             row['Indicateur conjoncturel de fécondité France métropolitaine'].replace(',', '.'))
         sum += fertilityRate
         yearsCount += 1
-        print('fertilityRate', fertilityRate)
+        print(row['Année'], 'fertilityRate', fertilityRate)
 
 FranceAverageFertilityRate = sum/yearsCount
 # Average fertility rate in Metropolitan France from 1901 to 2019
