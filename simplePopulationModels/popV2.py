@@ -41,10 +41,20 @@ LIFE_EXPECTANCY = int((45.4+49)/2)
 CHILDREN_P_PERSON = FranceAverageFertilityRate/200
 MATERNITY_AVERAGE_AGE = int(29.4)
 
-population = {0: INIT_POP}
 
-for age in range(1, LIFE_EXPECTANCY+2):
-    population[age] = 0
+# Load population count by age in 1901 in France
+population = {}
+with open('simplePopulationModels/population1901FranceMetropolitaine.csv', newline='', encoding='utf-8') as csvfile:
+    reader = csv.DictReader(csvfile, delimiter=',')
+
+    for row in reader:
+        rawAge = row['Age en années révolues']
+        if rawAge == '100 ou plus ':
+            age = 100
+        else:
+            age = int(rawAge)
+        count = int(row['Les deux sexes'])
+        population[age] = count
 
 
 def addYear():
@@ -59,22 +69,31 @@ def addYear():
         newPopulation[age+1] = population[age]
 
     # old people die
+    print('{:,}'.format(newPopulation[LIFE_EXPECTANCY+1]), "people die")
     newPopulation[LIFE_EXPECTANCY+1] = 0
 
     # new adults have children
-    newPopulation[0] = int(newPopulation[MATERNITY_AVERAGE_AGE]*CHILDREN_P_PERSON)
+    newPopulation[0] = int(
+        newPopulation[MATERNITY_AVERAGE_AGE]*CHILDREN_P_PERSON)
+        
+    print('{:,}'.format(newPopulation[0]), "children born")
 
     population = newPopulation
 
 
-for year in range(1901, 2020):
+print()
+totalPop = reduce(lambda v, e: v+e, population.values())
+print('pop :', '{:,}'.format(totalPop))
+
+for year in range(1901, 1910):
 
     print('---------------------------')
+    print('year', year)
 
     totalPop = reduce(lambda v, e: v+e, population.values())
-
-    print('year', year, 'pop :', '{:,}'.format(totalPop))
 
     # print(population)
 
     addYear()
+
+    print('pop :', '{:,}'.format(totalPop))
