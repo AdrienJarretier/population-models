@@ -29,7 +29,7 @@ with open('Donnees_annexes_FR_12122020_Annexe_4_Fecondite.csv', newline='', enco
             row['Indicateur conjoncturel de fécondité France métropolitaine'].replace(',', '.'))
         sum += fertilityRate
         yearsCount += 1
-        print(row['Année'], 'fertilityRate', fertilityRate)
+        # print(row['Année'], 'fertilityRate', fertilityRate)
 
 FranceAverageFertilityRate = sum/yearsCount
 # Average fertility rate in Metropolitan France from 1901 to 2019
@@ -75,7 +75,7 @@ def addYear():
     # new adults have children
     newPopulation[0] = int(
         newPopulation[MATERNITY_AVERAGE_AGE]*CHILDREN_P_PERSON)
-        
+
     print('{:,}'.format(newPopulation[0]), "children born")
 
     population = newPopulation
@@ -85,15 +85,15 @@ print()
 totalPop = reduce(lambda v, e: v+e, population.values())
 print('pop :', '{:,}'.format(totalPop))
 
-for year in range(1901, 1910):
+for year in range(1901, 1903):
 
     print('---------------------------')
     print('year', year)
 
-    totalPop = reduce(lambda v, e: v+e, population.values())
-
     # print(population)
 
     addYear()
+
+    totalPop = reduce(lambda v, e: v+e, population.values())
 
     print('pop :', '{:,}'.format(totalPop))
